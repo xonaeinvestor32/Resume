@@ -2,7 +2,7 @@
 :root {
   --primary-color: #e84c64;
   --background-color: #f5f5f5;
-  --text-color: #000; /* Changed to black */
+  --text-color: #000; /* Set default text color to black */
   --font-family: "Helvetica Neue", Arial, sans-serif;
   --font-size-base: 16px;
   --border-radius: 10px;
@@ -18,27 +18,42 @@
   padding: 0;
   box-sizing: border-box;
   font-family: var(--font-family);
-  color: var(--text-color); /* Set default text color to black */
+  color: var(--text-color);
 }
 
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensures content fits screen height */
+  min-height: 100vh;
   background-color: var(--background-color);
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* Main Layout */
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* Adjusted for better proportions */
+  grid-template-columns: 1fr 2fr;
   width: 100%;
   height: 100vh;
   background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius);
   overflow: hidden;
+}
+
+/* Adjustments for Small Screens */
+@media (max-width: 48em) { /* 768px */
+  .container {
+    height: auto; /* Allow container height to adjust */
+    min-height: 100vh; /* Ensure minimum height fills the viewport */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  /* Stack sidebar and main content vertically */
+  .container {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Sidebar (Left Panel) */
@@ -53,7 +68,6 @@ body {
   min-width: var(--sidebar-min-width);
 }
 
-/* Profile Image */
 .profile-img {
   width: var(--profile-img-size);
   height: var(--profile-img-size);
@@ -64,7 +78,6 @@ body {
   height: auto;
 }
 
-/* Sidebar Sections */
 .sidebar__section {
   margin-bottom: calc(var(--spacing-unit) * 3);
   width: 100%;
@@ -142,17 +155,21 @@ button:focus,
 }
 
 /* Hover Effects */
-.sidebar h2:hover,
-.main-content h2:hover {
+.sidebar h2:hover {
   color: rgba(255, 255, 255, 0.8);
   transition: color 0.3s ease;
 }
 
+.main-content h2:hover {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
 /* Responsive Design */
-/* Mobile-First Approach */
 @media (min-width: 50em) { /* 800px */
   .container {
     grid-template-columns: var(--sidebar-width) auto;
+    height: 100vh;
   }
 
   .sidebar {
@@ -167,6 +184,9 @@ button:focus,
 @media (max-width: 50em) {
   .container {
     grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
   }
 
   .sidebar {
@@ -196,7 +216,7 @@ button:focus,
 
 @media (max-height: 31.25em) { /* 500px */
   .sidebar {
-    display: none; /* Hide sidebar on very small screens */
+    display: none;
   }
 
   .container {
@@ -248,19 +268,11 @@ button:focus,
   transition: color 0.3s ease;
 }
 
-.sidebar h2:hover {
-  color: rgba(255, 255, 255, 0.8);
-}
-
 /* === Main Content Styles === */
 .main-content h1,
 .main-content h2,
 .main-content h3 {
   transition: color 0.3s ease;
-}
-
-.main-content h2:hover {
-  color: var(--primary-color);
 }
 
 /* Additional Spacing Between Sections */
